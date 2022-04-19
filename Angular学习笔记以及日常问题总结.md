@@ -23,12 +23,13 @@ const routes: Routes = [
 7 export class AppRoutingModule {
 8 
 9 }
+```
 
 Route支持依赖注入，在Component中可以注入Route对象。
 
 值得注意，注入的router并不知道自己处于哪个层级。通过注入ActivatedRoute可以查询
 
-
+```js
  1 import { Component, OnInit } from '@angular/core';
  2 import { Router, ActivatedRoute } from '@angular/router';
  3 
@@ -48,21 +49,22 @@ Route支持依赖注入，在Component中可以注入Route对象。
 17 
 18 }
 
- 
+ ```
 
 二. routerLink
 在html template中，要实现通过点击实现Route间的跳转，用hRef就可以。
 
 但是，这种方式实现的时候会刷新整个页面，网页中的活动数据并不会保存，而且耗费资源。
-
+```js
 <a hRef="/">Home</a>
 <a hRef="/servers">Servers</a>
 <a hRef="/users">Users</a>
+```
 正确则是用routerLink实现跳转
 
 routerLink支持绝对寻址和相对寻址，在路径中加'/'或不加
 
-
+```js
 <li role="presentation"
   routerLinkActive="active"
   [routerLinkActiveOptions]="{exact: true}">
@@ -76,8 +78,7 @@ routerLink支持绝对寻址和相对寻址，在路径中加'/'或不加
   routerLinkActive="active">
   <a [routerLink]="['users']">Users</a>
 </li>
-
- 
+```
 
 三. 动态Route
 通常，当用户导航你的应用时，你会希望把信息从一个组件传递到另一个组件。例如，考虑一个显示杂货商品购物清单的应用。列表中的每一项都有一个唯一的 id。要想编辑某个项目，用户需要单击“编辑”按钮，打开一个 EditGroceryItem 组件。你希望该组件得到该商品的 id，以便它能向用户显示正确的信息。
@@ -88,9 +89,10 @@ routerLink支持绝对寻址和相对寻址，在路径中加'/'或不加
 
 1. 把 ActivatedRoute 和 ParamMap 导入你的组件。
 
+
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 2.  通过把 ActivatedRoute 的一个实例添加到你的应用的构造函数中来注入它：
-
+```js
 constructor(
   private route: ActivatedRoute,
 ) {}
@@ -101,8 +103,9 @@ ngOnInit() {
     this.name = params['name'];
   });
 }
-注意：前面的例子使用了一个变量 name，并根据 name 参数给它赋值。
 
+注意：前面的例子使用了一个变量 name，并根据 name 参数给它赋值。
+```
  
 
 四. Route层级
@@ -133,7 +136,7 @@ root
 还需要一个通配页面，用来定向到Not found Page，Route的结构也要层级设计
 
 children 用来实现route的子集
-复制代码
+```js
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'users', component: UsersComponent, children: [
@@ -148,7 +151,7 @@ const appRoutes: Routes = [
   { path: 'not-found', component: ErrorPageComponent, data: {message: 'Page not found!'} },
   { path: '**', redirectTo: '/not-found' }
 ];
-
+```
 RedirectTo实现重定向
 
  
@@ -174,7 +177,7 @@ CanLoad
 
 定义Resolver：
 
-
+```js
  1 import { Injectable } from '@angular/core';
  2 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
  3 import { Observable } from 'rxjs/Observable';
@@ -196,9 +199,10 @@ CanLoad
 19         return this.serverService.getServer(route.params['id']);
 20     }
 21 }
+```
 
 注册app：
-
+```js
 providers: [ServersService, AuthService, AuthGuard, CanDeactivateGuard, ServerResolver]
 route中添加resolve属性：
 
@@ -206,3 +210,4 @@ children: [
       { path: ":id", component: ServerComponent, resolve: {server: ServerResolver} },
       { path: ":id/edit", component: EditServerComponent, canDeactivate: [CanDeactivateGuard]},
 ]
+```
