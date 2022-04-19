@@ -5,15 +5,15 @@
 为了处理从一个视图到下一个视图之间的导航，你可以使用 Angular 的路由器。路由器会把浏览器 URL 解释成改变视图的操作指南，以完成导航。
 
 要使用Routes，在程序中定义一个route对象：
-
+```js
 const routes: Routes = [
   { path: 'first-component', component: FirstComponent },
   { path: 'second-component', component: SecondComponent },
  ];
-
+```
 作为根目录Import到Component中
 
-
+```js
 1 @NgModule({
 2   imports: [
 3     RouterModule.forRoot(appRoutes)
@@ -174,7 +174,7 @@ CanLoad
 
 定义Resolver：
 
-复制代码
+
  1 import { Injectable } from '@angular/core';
  2 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
  3 import { Observable } from 'rxjs/Observable';
