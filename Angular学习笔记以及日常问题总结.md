@@ -211,3 +211,99 @@ children: [
       { path: ":id/edit", component: EditServerComponent, canDeactivate: [CanDeactivateGuard]},
 ]
 ```
+## 构造函数与ngOnInit的区别
+虽然大概了解两者在使用上的不同，这里我想得到一个比较全面的比较，去查了一些博客，挖掘组件初始化的过程。
+**JS/TS语言相关的区别**
+我们先从一个与语言本身有关的最明显的区别开始。ngOnInit只是一个类上的方法，结构上与类上的任何其他方法没有什么不同。 只是Angular团队决定以这种方式命名，但它可能是任何其他名称：
+```js
+class MyComponent {
+  ngOnInit() { }
+  otherNameForNgOnInit() { }
+}
+
+是否要在组件类上实现该方法，完全取决于你。在编译期Angular编译器检查组件是否实现此方法，并使用适当的标志标记该类：
+
+export const enum NodeFlags {
+  ...
+  OnInit = 1 << 16,
+
+此标志会在检测变化时用来决定是否调用组件类实例的这个方法：
+
+if (def.flags & NodeFlags.OnInit && ...) {
+  componentClassInstance.ngOnInit();
+}
+
+构造函数又是一个不同的东西。 无论是否在TypeScript类中实现它，在创建类的实例时仍然会被调用。 这是因为typescript类构造函数被转换成JavaScript构造函数：
+
+class MyComponent {
+  constructor() {
+    console.log('Hello');
+  }
+}
+
+转换为
+
+function MyComponent() {
+  console.log('Hello');
+}
+
+使用new操作符调用此函数来创建此类的实例：
+
+onst componentInstance = new MyComponent(
+
+所以如果你在类里移除了构造函数，它会转换为一个空函数：
+
+class MyComponent { }
+
+转换为空函数
+
+function MyComponent() {}
+```
+这就是为什么我说构造函数被调用，无论你是否在类上实现它。
+
+组件初始化过程相关的区别
+从组件初始化阶段的角度来看，两者之间有很大的区别。 Angular启动过程包括两个主要阶段：
+
+构造组件树
+执行变更检测
+当Angular构造组件树时，调用组件的构造函数。 包括ngOnInit的所有生命周期钩子都作为以下变更检测阶段的一部分被调用。 通常，组件初始化逻辑需要有依赖注入（DI）提供程序或可用的输入绑定或渲染的DOM。 这些可用于Angular启动过程的不同阶段。
+
+当Angular构造组件树时，已经配置了根模块注入器，因此可以注入任何全局依赖关系。 此外，当Angular实例化子组件类时，父组件的注入器也已设置，因此可以注入在父组件（包括父组件本身）上定义的提供程序。 组件构造函数是在注入器的上下文中调用的唯一方法，因此如果需要任何依赖关系，这是获取这些依赖关系的唯一位置。 @Input通信机制作为以下变更检测阶段的一部分进行处理，因此输入绑定在构造函数中不可用。
+
+当Angular开始变更检测时，组件树已经构建好，并且已经调用树中所有组件的构造函数。 此外，此时每个组件的模板节点都添加到DOM中。 在这里，你可以使用初始化组件所需的所有数据——DI provider，DOM和输入绑定。
+
+你可以在Angular里你所需要知道关于变更检测的一切读到更多关于变更检测的内容，以及在Angular属性绑定更新机制里了解Angular是如何处理输入的。
+
+我们以一个快速的例子来展示这些阶段。 假设你有以下模板：
+
+<my-app>
+   <child-comp [i]='prop'>
+
+所以Angular开始引导应用程序。 如上所述，它首先为每个组件创建类。 所以它调用MyAppComponent构造函数。 执行组件构造函数时，Angular将解析注入到MyAppComponent构造函数中的所有依赖项，并将它们作为参数。 它还创建一个DOM节点，它是my-app组件的宿主元素。然后，它继续为child-comp创建宿主元素，并调用ChildComponent构造函数。在这个阶段Angular不关心输入绑定 i 和任何生命周期钩子。 所以当这个过程完成时Angular以以下的组件视图树结束：
+```js
+MyAppView
+  - MyApp component instance
+  - my-app host element data
+       ChildComponentView
+         - ChildComponent component instance
+         - child-comp host element data
+```
+接着Angular运行更改检测，更新my-app的绑定并调用MyAppComponent实例上的ngOnInit。 然后，它继续更新child-comp的绑定，并在ChildComponent类上调用ngOnInit。
+
+你可以在这里了解更多关于我在上面提到的视图，这就是为什么你不会在Angular中找到组件。
+
+使用上的区别
+现在我们来看下在使用方面的区别。
+
+构造函数
+Angular类构造函数主要用于注入依赖关系。 Angular称此构造函数注入模式，这里详细说明。 对于更深入的架构理解，您可以阅读MiškoHevery的“构造器注入与Setter注入”。
+
+但是，构造函数的使用不限于DI（依赖注入）。 例如，@angular/router模块的router-outlet指令使用它在路由器生态系统内注册自身及其位置（viewContainerRef）。 我在这就是如何在@ViewChild查询计算之前获取ViewContainerRef 描述了该方法。
+
+然而，通常的做法尽可能少放逻辑到构造函数中。
+
+- NgOnInit
+如上所述，Angular在创建组件的DOM，使用构造函数注入所有必须的依赖，以及处理完输入绑定完成后调用ngOnInit。所以这里你有所有必需的信息，使它成为执行初始化逻辑的好地方。
+
+通常的做法是使用ngOnInit来执行初始化逻辑，即使该逻辑不依赖于DI，DOM或输入绑定。
+
