@@ -1,3 +1,4 @@
+#周末总结最近的js原生，每日学习更新
 ****javascript原生知识点****
 1. 基本类型有哪几种？null 是对象吗？基本数据类型和复杂数据类型存储有什么区别？
 基本类型有6种，分别是undefined,null,bool,string,number,symbol(ES6新增)。
