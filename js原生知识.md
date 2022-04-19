@@ -1,6 +1,6 @@
 ## 周末总结最近的js原生，每日学习更新
 ****javascript原生知识点****
-1. 基本类型有哪几种？null 是对象吗？基本数据类型和复杂数据类型存储有什么区别？
+1. 基本类型，null， 基本数据类型和复杂数据类型存储有什么区别
 基本类型有6种，分别是undefined,null,bool,string,number,symbol(ES6新增)。
 虽然 typeof null 返回的值是 object,但是null不是对象，而是基本数据类型的一种。
 基本数据类型存储在栈内存，存储的是值。
@@ -103,7 +103,7 @@ let const 在全局作用域下不会绑定在window对象下，而var会，这�
 3、实现js模块
 柯里化 防震动 节流等
 
-10、call apply和bind的实现
+10、call apply和bind的实现 （这里没有手打，整理示例）
 call的简单实现，利用this的隐式绑定
 ```js
 Function.prototype.call = function (context) {
@@ -136,34 +136,7 @@ bar.call(null, 'teacher', 25);
 // 浏览器环境: Chirs teacher 25; node 环境: undefined teacher 25
 apply的实现，只是apply接受的参数是数组的形式
 
-Function.prototype.apply = function (context, rest) {
-    if (!context) {
-        //context为null或者是undefined时,设置默认值
-        context = typeof window === 'undefined' ? global : window;
-    }
-    context.fn = this;
-    let result;
-    if(rest === undefined || rest === null) {
-        //undefined 或者 是 null 不是 Iterator 对象，不能被 ...
-        result = context.fn(rest);
-    }else if(typeof rest === 'object') {
-        result = context.fn(...rest);
-    }
-    delete context.fn;
-    return result;
-}
-var foo = {
-    name: 'Selina'
-}
-var name = 'Chirs';
-function bar(job, age) {
-    console.log(this.name);
-    console.log(job, age);
-}
-bar.apply(foo, ['programmer', 20]);
-// Selina programmer 20
-bar.apply(null, ['teacher', 25]);
-// 浏览器环境: Chirs programmer 20; node 环境: undefined teacher 25
+
 bind的实现 闭包返回和参数的拼接
 
 `Function.prototype.bind = function (context){
