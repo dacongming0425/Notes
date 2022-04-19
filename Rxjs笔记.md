@@ -1,6 +1,6 @@
-#Rxjs学习笔记，每日学习更新
+##Rxjs学习笔记，每日学习更新
 
-## $基础知识点
+## 基础知识点
 
 1.Observable
 
@@ -8,7 +8,7 @@
 
 3.创建Observable
 
-## $Observer
+## Observer
 观察者（Observer）是一个有三个方法的对象
 
 |方法名|作用|
@@ -60,7 +60,7 @@ source.subscribe(
 )
 ```
 
-## $退订(unsubscribe)
+## 退订(unsubscribe)
 观察者想要退订，只要调用订阅返回的对象的```unsubscribe```方法，这样观察者就不会再接收到Observable的信息了。
 ```js
 const source = new Observable(observer => {
@@ -80,10 +80,10 @@ setTimeout( () => {
 }, 5000)
 ```
 
-## $操作符
+## 操作符
 在RxJs中，操作符是用来处理数据流的。我们往往需要对数据流做一系列处理，才交给Observer，这时操作符就像一个管道一样，数据进入管道，完成处理，流出管道。
 
-[实例代码](./demo3/index.ts)
+
 
 ```js
 import {Observable} from 'rxjs';
@@ -115,7 +115,7 @@ map 操作符和数组的 map 方法类似，可以对数据流进行处理。
 
 pipe 方法就是数据管道，会对数据流进行处理，上面的例子只有一个 map 操作符进行处理，可以添加更多的操作符作为参数。
 
-## $创建Observable
+## 创建Observable
 注意和操作符不同，他们是从rxjs中导入，而不是rxjs/operators
 
 ### of方法
@@ -241,7 +241,6 @@ pipe就是管道的意思，数据流通过操作符处理，流出然后交给�
 
 **mapTo实例**
 
-[实例代码](./demo4/index.ts)
 
 ```js
 import {interval} from 'rxjs';
