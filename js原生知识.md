@@ -41,7 +41,7 @@ for循环遍历key
 Object.assign
 ES6的对象展开运算符 ...
 深拷贝
-递归遍历（DFS，环形问题，边界处理，https://github.com/Advanced-Frontend/Daily-Interview-Question/issues/10）
+递归遍历（DFS，环形问题，边界处理，来个题目 https://github.com/Advanced-Frontend/Daily-Interview-Question/issues/10）
 JSON.parse(JSON.stringify())
 该方法存在一些局限性，会忽略 undefined，会忽略 symbol，不能序列化函数，不能解决循环引用的对象。但是它还是能解决大部分深度拷贝的问题。
 
@@ -325,7 +325,7 @@ read(A).then(data => {
 });
 ```
 3、async/await
-async/await作为generator的语法糖，也建议了解其原理，里面最重要的知识点就是co模块，手写一个没问题。
+async/await作为generator的语法糖，也建议了解其原理，里面最重要的知识点就是co模块，手写它一个。
 http://es6.ruanyifeng.com/#docs/generator-async
 
 20、对webWorker的理解
@@ -372,7 +372,7 @@ node中间件实现跨域的原理如下:
 2.将请求 转发给服务器。
 3.拿到服务器 响应 数据。
 4.将 响应 转发给客户端。
-以下三种跨域方式很少用，如有兴趣，可自行查阅相关资料。
+以下三种跨域方式很少用，还未查阅相关资料。
 window.name + iframe
 location.hash + iframe
 document.domain (主域需相同)
@@ -382,12 +382,8 @@ document.domain (主域需相同)
 async是下载完立即执行，中断渲染引擎（js线程和UI渲染线程是互斥的），不保证执行顺序。
 defer是渲染完再执行。 保证顺序。
 
-24、实现双向绑定 Proxy 与 Object.defineProperty 相比优劣如何
-defineProperty实现双向绑定，学习链接
-https://codepen.io/xiaomuzhu/pen/jxBRgj/
-https://www.jianshu.com/p/2df6dcddb0d7
 
-25、Function.proto(getPrototypeOf)是什么？
+24、Function.proto(getPrototypeOf)是什么？
 获取一个对象的原型，在chrome中可以通过__proto__的形式，或者在ES6中可以通过Object.getPrototypeOf的形式。
 那么Function.__proto__是什么？也就是说Function由什么对象继承而来，我们来做如下判别。
 
