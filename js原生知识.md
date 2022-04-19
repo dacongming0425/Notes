@@ -305,7 +305,7 @@ Math.js big.js
 不能try catch获取错误，导致代码难以维护
 2、Promise
 Promise 主要解决了回调地狱的问题，Promise 最早由社区提出和实现，ES6 将其写进了语言标准，统一了用法，原生提供了Promise对象。
-那么我们看看Promise是如何解决回调地狱问题的，仍然以上文的readFile为例。
+那么来瞅瞅Promise是如何解决回调地狱问题的，仍然以上文的readFile为例。
 
 ``` js
 function read(url) {
