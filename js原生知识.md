@@ -12,7 +12,8 @@ instanceof 比如A instanceof B 通过B的原型链层层查找，一直找到nu
 instanceof的实现代码:
 
 
-```// L instanceof R
+```js
+// L instanceof R
 function instance_of(L, R) {//L 表示左表达式，R 表示右表达式
     var O = R.prototype;// 取 R 的显式原型
     L = L.__proto__;    // 取 L 的隐式原型
