@@ -42,7 +42,7 @@ for循环遍历key
 Object.assign
 ES6的对象展开运算符 ...
 深拷贝
-递归遍历（DFS，环形问题，边界处理，来个题目 https://github.com/Advanced-Frontend/Daily-Interview-Question/issues/10）
+递归遍历（DFS，环形问题，边界处理
 JSON.parse(JSON.stringify())
 该方法存在一些局限性，会忽略 undefined，会忽略 symbol，不能序列化函数，不能解决循环引用的对象。但是它还是能解决大部分深度拷贝的问题。
 
@@ -286,7 +286,7 @@ function add(num1, num2) {
 但是这种方法对大数支持的依然不好
 2.三方库
 Math.js big.js
-详细参考：https://juejin.im/post/5b90e00e6fb9a05cf9080dff
+网上找到相关的方法参考，还没去学习：https://juejin.im/post/5b90e00e6fb9a05cf9080dff
 
 19、js的异步发展史
 1、回调函数
