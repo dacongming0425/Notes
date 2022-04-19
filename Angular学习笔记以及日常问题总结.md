@@ -1,10 +1,9 @@
 ## Angular笔记以及日常问题，每日学习更新
 ## 一. Route的概述 day4.19
-在单页面应用中，你可以通过显示或隐藏特定组件的显示部分来改变用户能看到的内容，而不用去服务器获取新页面。当用户执行应用任务时，他们要在你预定义的不同视图之间移动。要想在应用的单个页面中实现这种导航，你可以使用 Angular 的Router。
+在单页面应用中，可以通过显示或隐藏特定组件的显示部分来改变用户能看到的内容，而不用去服务器获取新页面。当用户执行应用任务时，他们要在你预定义的不同视图之间移动。要想在应用的单个页面中实现这种导航，处理从一个视图到下一个视图之间的导航，你可以使用 Angular 的路由器。路由器会把浏览器 URL 解释成改变视图的操作指南，以完成导航。
+在单页面应用中，可以通过显示或隐藏特定组件的显示部分来改变用户能看到的内容，而不用去服务器获取新页面。当用户执行应用任务时，他们要在你预定义的不同视图之间移动。要想在应用的单个页面中实现这种导航，
 
-为了处理从一个视图到下一个视图之间的导航，你可以使用 Angular 的路由器。路由器会把浏览器 URL 解释成改变视图的操作指南，以完成导航。
-
-要使用Routes，在程序中定义一个route对象：
+现在程序中定义一个route对象：
 ```js
 const routes: Routes = [
   { path: 'first-component', component: FirstComponent },
@@ -27,7 +26,7 @@ const routes: Routes = [
 
 Route支持依赖注入，在Component中可以注入Route对象。
 
-值得注意，注入的router并不知道自己处于哪个层级。通过注入ActivatedRoute可以查询
+注入的router并不知道自己处于哪个层级。通过注入ActivatedRoute可以查询
 
 ```js
  1 import { Component, OnInit } from '@angular/core';
@@ -81,13 +80,13 @@ routerLink支持绝对寻址和相对寻址，在路径中加'/'或不加
 ```
 
 ## 三. 动态Route
-通常，当用户导航你的应用时，你会希望把信息从一个组件传递到另一个组件。例如，考虑一个显示杂货商品购物清单的应用。列表中的每一项都有一个唯一的 id。要想编辑某个项目，用户需要单击“编辑”按钮，打开一个 EditGroceryItem 组件。你希望该组件得到该商品的 id，以便它能向用户显示正确的信息。
+通常，当用户导航应用时，会把信息从一个组件传递到另一个组件。比如说，考虑一个显示杂货商品购物清单的应用。列表中的每一项都有一个唯一的 id。要想编辑某个项目，用户需要单击“编辑”按钮，打开一个 EditGroceryItem 组件。肯定希望该组件得到该商品的 id，以便它能向用户显示正确的信息。
 
-你也可以使用一个路由把这种类型的信息传给你的应用组件。要做到这一点，你可以使用 ActivatedRoute 接口。
+就也可以使用一个路由把这种类型的信息传给应用组件。要做到这一点，使用 ActivatedRoute 接口。
 
 要从路由中获取信息：
 
-1. 把 ActivatedRoute 和 ParamMap 导入你的组件。
+1. 把 ActivatedRoute 和 ParamMap 导入组件。
 
 
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -104,7 +103,7 @@ ngOnInit() {
   });
 }
 
-注意：前面的例子使用了一个变量 name，并根据 name 参数给它赋值。
+
 ```
  
 
@@ -167,11 +166,11 @@ Resolve
 CanLoad
 要想使用路由守卫，可以考虑使用无组件路由，因为这对于保护子路由很方便。
 
-内容过多，参考：https://angular.cn/guide/router-tutorial-toh#milestone-5-route-guards
+内容太多了暂时整理不完，参考官方文档：https://angular.cn/guide/router-tutorial-toh#milestone-5-route-guards
 
  
 
-六. Route间的数据传递
+六. Route间的数据传递 （这里没有手打，去看的示例）
 路由中的 data 属性是存放与该特定路由关联的任意数据的地方。每个激活的路由都可以访问 data 属性。可以用它来存储页面标题，文本和其它只读静态数据等项目。你可以尝试使用resolve来检索动态数据。
 
 示例：
