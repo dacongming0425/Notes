@@ -110,7 +110,7 @@ ngOnInit() {
 
 四. Route层级
 要实现这样的页面：
->
+```js
 root
 
 　|-Servers
@@ -132,6 +132,7 @@ root
         |- User1
 
         |- User2　　
+        ```
 
 还需要一个通配页面，用来定向到Not found Page，Route的结构也要层级设计
 
