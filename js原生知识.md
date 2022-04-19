@@ -10,7 +10,8 @@ typeof：能判断原始值，比如string number boolean symbol undefined。 �
 instanceof 比如A instanceof B 通过B的原型链层层查找，一直找到null为止。注意instanceof不能正确判断原始类型的值，可以试一试 console.log(1 instanceof Number);
 instanceof的实现代码:
 
-`// L instanceof R
+
+```// L instanceof R
 function instance_of(L, R) {//L 表示左表达式，R 表示右表达式
     var O = R.prototype;// 取 R 的显式原型
     L = L.__proto__;    // 取 L 的隐式原型
@@ -31,7 +32,8 @@ Object.prototype.toString     任何类型都能判断
 }`
 
 var x = [];
-console.log(type(x));`
+console.log(type(x));
+```
 3、浅拷贝与深拷贝
 浅拷贝：
 for循环遍历key
@@ -73,7 +75,7 @@ Array.from(arrayLike);
 那么将object也转换成Number,空数组转换成数字，对应的值是0.(空数组转换成数字，对应的值是0，如果数组中只有一个数字，那么转成number就是这个数字，其它情况，均为NaN)
 而 ![] 转成 0 所以返回 true [] == 0 true [1] == 1 [2] == 2
 而 [] == [] 两边类型相同，不转换类型，因为是引用类型，地址不同 所以返回false
-是不是感觉很滑稽
+感觉还有点滑稽
 
 6、 ES6中的class和ES5的类有什么区别？
 ES6 class 内部所有定义的方法都是不可枚举的;
@@ -101,7 +103,7 @@ let const 在全局作用域下不会绑定在window对象下，而var会，这�
 
 10、call apply和bind的实现
 call的简单实现，利用this的隐式绑定
-
+```
 Function.prototype.call = function (context) {
     /** 如果第一个参数传入的是 null 或者是 undefined, 那么指向this指向 window/global */
     /** 如果第一个参数传入的不是null或者是undefined, 那么必须是一个对象 */
@@ -115,7 +117,8 @@ Function.prototype.call = function (context) {
     delete context.fn;
     return result;
 }
-
+```
+```
 //测试代码
 var foo = {
     name: 'Selina'
@@ -187,7 +190,8 @@ var obj = {
     name: 1,
 }
 var binded = test.bind(obj, 2);
-binded(3);`
+binded(3);
+```
 11、new的原理是什么？通过new的方式创建对象和通过字面量创建有什么区别？
 new的原理，四个步骤
 new:
@@ -196,6 +200,7 @@ new:
 属性和方法被加入到 this 引用的对象中。并执行了构造函数中的方法.
 如果函数没有返回其他对象，那么this指向这个新对象，否则this指向构造函数中返回的对象。
 
+```
 function new(func) {
     let target = {};
     target.__proto__ = func.prototype;
@@ -205,6 +210,7 @@ function new(func) {
     }
     return target;
 }
+```
 字面量创建对象，不会调用 Object构造函数, 简洁且性能更好;
 new Object() 方式创建对象本质上是方法调用，涉及到在proto链中遍历该方法，当找到该方法后，又会生产方法调用必须的 堆栈信息，方法调用结束后，还要释放该堆栈，性能不如字面量的方式。
 通过对象字面量定义对象时，不会调用Object构造函数。
@@ -221,7 +227,7 @@ new Object() 方式创建对象本质上是方法调用，涉及到在proto链�
 prototype是构造函数的属性。
 __proto__ 是每个实例都有的属性，可以访问 [[prototype]] 属性。
 实例的__proto__ 与其构造函数的prototype指向的是同一个对象。
-
+```
 function Student(name) {
     this.name = name;
 }
@@ -233,6 +239,7 @@ console.log(Jack.__proto__);
 //console.log(Object.getPrototypeOf(Jack));;
 console.log(Student.prototype);
 console.log(Jack.__proto__ === Student.prototype);//true
+```
 15、用ES5实现一个继承
 寄生组合
 
@@ -265,13 +272,15 @@ requestAnimationFrame的特点
 怎么解决精度问题？
 1.将数字转成整数
 这是最容易想到的方法，也相对简单
-
+```
 function add(num1, num2) {
  const num1Digits = (num1.toString().split('.')[1] || '').length;
  const num2Digits = (num2.toString().split('.')[1] || '').length;
  const baseNum = Math.pow(10, Math.max(num1Digits, num2Digits));
  return (num1 * baseNum + num2 * baseNum) / baseNum;
 }
+
+```
 但是这种方法对大数支持的依然不好
 2.三方库
 Math.js big.js
@@ -296,7 +305,7 @@ Math.js big.js
 Promise 主要解决了回调地狱的问题，Promise 最早由社区提出和实现，ES6 将其写进了语言标准，统一了用法，原生提供了Promise对象。
 那么我们看看Promise是如何解决回调地狱问题的，仍然以上文的readFile为例。
 
-> function read(url) {
+``` function read(url) {
     return new Promise((resolve, reject) => {
         fs.readFile(url, 'utf8', (err, data) => {
             if(err) reject(err);
@@ -313,7 +322,7 @@ read(A).then(data => {
 }).catch(reason => {
     console.log(reason);
 });
-
+```
 3、async/await
 async/await作为generator的语法糖，也建议了解其原理，里面最重要的知识点就是co模块，手写一个没问题。
 http://es6.ruanyifeng.com/#docs/generator-async
@@ -373,7 +382,7 @@ async是下载完立即执行，中断渲染引擎（js线程和UI渲染线程�
 defer是渲染完再执行。 保证顺序。
 
 24、实现双向绑定 Proxy 与 Object.defineProperty 相比优劣如何
-defineProperty实现双向绑定
+defineProperty实现双向绑定，学习链接
 https://codepen.io/xiaomuzhu/pen/jxBRgj/
 https://www.jianshu.com/p/2df6dcddb0d7
 
