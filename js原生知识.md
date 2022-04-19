@@ -217,7 +217,7 @@ function new(func) {
 new Object() 方式创建对象本质上是方法调用，涉及到在proto链中遍历该方法，当找到该方法后，又会生产方法调用必须的 堆栈信息，方法调用结束后，还要释放该堆栈，性能不如字面量的方式。
 通过对象字面量定义对象时，不会调用Object构造函数。
 
-12、 谈谈你对原型的理解？
+12、 对原型的理解
 在 JavaScript 中，每当定义一个对象（函数也是对象）时候，对象中都会包含一些预定义的属性。其中每个函数对象都有一个prototype 属性，这个属性指向函数的原型对象。使用原型对象的好处是所有对象实例共享它所包含的属性和方法。
 
 13、 什么是原型链？【原型链解决的是什么问题？】
@@ -388,8 +388,9 @@ defer是渲染完再执行。 保证顺序。
 
 24、Function.proto(getPrototypeOf)是什么？
 获取一个对象的原型，在chrome中可以通过__proto__的形式，或者在ES6中可以通过Object.getPrototypeOf的形式。
-那么Function.__proto__是什么？也就是说Function由什么对象继承而来，我们来做如下判别。
-
-> Function.__proto__==Object.prototype //false
-> Function.__proto__==Function.prototype//true
-> 发现Function的原型也是Function。
+那么Function.__proto__是什么？也就是说Function由什么对象继承而来，做乐如下判别。
+```js
+ Function.__proto__==Object.prototype //false
+ Function.__proto__==Function.prototype//true
+ ```
+ 发现Function的原型也是Function。
