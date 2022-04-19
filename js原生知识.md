@@ -331,7 +331,7 @@ http://es6.ruanyifeng.com/#docs/generator-async
 20、对webWorker的理解
 HTML5则提出了 Web Worker 标准，表示js允许多线程，但是子线程完全受主线程控制并且不能操作dom，只有主线程可以操作dom，所以js本质上依然是单线程语言。
 简单示例：
-
+```
 var worker = new Worker('./worker.js'); //创建一个子线程
 worker.postMessage('Hello');
 worker.onmessage = function (e) {
@@ -344,6 +344,7 @@ onmessage = function (e) {
     console.log(e.data); //Hello
     postMessage("Hi"); //向主进程发送消息
 };
+```
 webWorker的特点：
 1、开启一个子进程
 2、用postMessage和onMessage与主进程进行通信
