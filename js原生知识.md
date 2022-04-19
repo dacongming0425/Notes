@@ -394,3 +394,78 @@ defer是渲染完再执行。 保证顺序。
  Function.__proto__==Function.prototype//true
  ```
  发现Function的原型也是Function。
+## 暂时性死区 4.19更新一、
+
+暂时性死区
+暂时性死区也叫临时性死区（Temporal Dead Zone），TDZ。let、const声明的变量不会进行变量的提升，如果在声明前访问就会报错：
+```js
+console.log(userName ) //报错ReferenceError: userName is not defined
+
+let userName = 'Sofia';
+```
+报错的原因，就是因为userName这个变量此时还存在与暂时性死区里面。
+
+二、变量提升的好坏
+好处：
+
+1、提高性能
+
+在预编译阶段，会统计声明的变量、函数，分配空间。
+
+2、增强容错性
+
+在很久很久以前，js只是用来发送表单，那时候还没调试工具，也没eslint等代码检查工具，所以需要一定的容错性。
+
+坏处：
+如下代码
+
+```js
+
+       function foo() {
+            console.log(userName) // undefined
+            if (false) {
+                var userName = 'Sofia';
+                return userName
+            } else {
+                return userName
+            }
+        }
+
+        var value =  foo();
+        console.log(value) //undefined
+```
+吊，在false的情况下，变量userName被创建了
+
+因为存在变量的提升，变量userName被提升到了函数顶部：
+
+```
+      function foo() {
+            var userName;
+            console.log(userName)
+            if (false) {
+                userName = 'Sofia';
+                return userName
+            } else {
+                return userName
+            }
+        }
+```
+看这情况难受，再也不太想用用var了，准备拥抱let、const，没有变量的提升。
+
+既然写到let、const，就总结下和var的区别，方便看看：
+
+1、不存在变量的提升
+
+2、暂时性死区
+
+3、不可重复声明
+
+4、let、const声明的变量不会被挂载到window下
+
+5、块级作用域
+
+  = =：那let和const的区别呢？
+
+1、无论是非严格模式下还是严格模式下，都不可以为const声明的常量再赋值。常量，顾名思义，不变的值。
+
+2、const声明时必须进行初始化赋值。
