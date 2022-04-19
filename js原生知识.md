@@ -105,7 +105,7 @@ let const 在全局作用域下不会绑定在window对象下，而var会，这�
 
 10、call apply和bind的实现
 call的简单实现，利用this的隐式绑定
-```
+```js
 Function.prototype.call = function (context) {
     /** 如果第一个参数传入的是 null 或者是 undefined, 那么指向this指向 window/global */
     /** 如果第一个参数传入的不是null或者是undefined, 那么必须是一个对象 */
@@ -120,7 +120,7 @@ Function.prototype.call = function (context) {
     return result;
 }
 ```
-```
+```js
 //测试代码
 var foo = {
     name: 'Selina'
@@ -229,7 +229,7 @@ new Object() 方式创建对象本质上是方法调用，涉及到在proto链�
 prototype是构造函数的属性。
 __proto__ 是每个实例都有的属性，可以访问 [[prototype]] 属性。
 实例的__proto__ 与其构造函数的prototype指向的是同一个对象。
-```
+```js
 function Student(name) {
     this.name = name;
 }
@@ -274,7 +274,7 @@ requestAnimationFrame的特点
 怎么解决精度问题？
 1.将数字转成整数
 这是最容易想到的方法，也相对简单
-```
+```js
 function add(num1, num2) {
  const num1Digits = (num1.toString().split('.')[1] || '').length;
  const num2Digits = (num2.toString().split('.')[1] || '').length;
@@ -307,7 +307,8 @@ Math.js big.js
 Promise 主要解决了回调地狱的问题，Promise 最早由社区提出和实现，ES6 将其写进了语言标准，统一了用法，原生提供了Promise对象。
 那么我们看看Promise是如何解决回调地狱问题的，仍然以上文的readFile为例。
 
-``` function read(url) {
+``` js
+function read(url) {
     return new Promise((resolve, reject) => {
         fs.readFile(url, 'utf8', (err, data) => {
             if(err) reject(err);
