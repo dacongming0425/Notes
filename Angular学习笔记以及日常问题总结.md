@@ -6,10 +6,11 @@
 
 要使用Routes，在程序中定义一个route对象：
 
-1 const routes: Routes = [
-2   { path: 'first-component', component: FirstComponent },
-3   { path: 'second-component', component: SecondComponent },
-4 ];
+const routes: Routes = [
+  { path: 'first-component', component: FirstComponent },
+  { path: 'second-component', component: SecondComponent },
+ ];
+
 作为根目录Import到Component中
 
 
@@ -106,7 +107,7 @@ ngOnInit() {
 
 四. Route层级
 要实现这样的页面：
-
+>
 root
 
 　|-Servers
