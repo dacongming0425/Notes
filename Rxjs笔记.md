@@ -81,7 +81,7 @@ setTimeout( () => {
 ```
 
 ## 操作符
-在RxJs中，操作符是用来处理数据流的。我们往往需要对数据流做一系列处理，才交给Observer，这时操作符就像一个管道一样，数据进入管道，完成处理，流出管道。
+在RxJs中，操作符是用来处理数据流的。往往需要对数据流做一系列处理，才交给Observer，这时操作符就像一个管道一样，数据进入管道，完成处理，流出管道。
 
 
 
@@ -146,7 +146,7 @@ const source = from([1,2,3]);
 
 from将可遍历对象（iterable）转化为一个Observable，字符串也有iterator接口，所以也支持。
 
-from还可以根据promise创建一个Observable。我们用fetch或者axios等类库发送的请求都是一个promise对象，我们可以使用from将其处理为一个Observable对象。
+from还可以根据promise创建一个Observable。用fetch或者axios等类库发送的请求都是一个promise对象，可以使用from将其处理为一个Observable对象。
 
 ### fromEvent方法
 用DOM事件创建Observable，第一个参数为DOM对象，第二个参数为事件名称。
@@ -194,13 +194,13 @@ range(1,100).subscribe(console.log);        // 产生1-100的正整数
 目前官方不推荐使用empty和never方法，而是推荐使用**常量EMPTY和NEVER**（不是方法，已经是一个Observable对象了）
 
 ### defer
-defer创建的Observable只有**在订阅时才会去创建**我们真正想要操作的Observable。defer延迟了创建Observable，而又有一个Observable方便我们去订阅，这样也就**推迟了占用资源**。
+defer创建的Observable只有**在订阅时才会去创建**真正想要操作的Observable。defer延迟了创建Observable，而又有一个Observable方便去订阅，这样也就**推迟了占用资源**。
 ```js
 defer(() => ajax(ajaxUrl));     // 只有订阅了才会去发送ajax请求
 ```
 
 ## 操作符
-操作符其实看作是处理数据流的管道，每个操作符实现了针对某个小的具体应用问题的功能，RxJS 编程最大的难点其实就是**如何去组合这些操作符从而解决我们的问题**。
+操作符其实看作是处理数据流的管道，每个操作符实现了针对某个小的具体应用问题的功能，RxJS 编程最大的难点其实就是**如何去组合这些操作符从而解决的问题**。
 
 RxJs有各种各样的操作符：
 
