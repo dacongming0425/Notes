@@ -161,8 +161,8 @@ _click.pipe(take(1)).subscribe(e => {
 })
 ```
 
-### fromEventPattern方法
-将添加事件处理器、删除事件处理器的API转化为Observable。（具体代码看RxJs教程，前端涉及较多，不过多理解）
+### fromEventPattern方罚
+将添加事件处理器、删除事件处理器的API转化为Observable。
 
 ### interval和timer
 interval和JS的setInterval类似，参数为时间间隔，下面的代码每隔1000ms会发出一个递增的函数
